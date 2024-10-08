@@ -1,4 +1,4 @@
-# jobAppAutomater
+# Ceevee
 
 # Installation
 
