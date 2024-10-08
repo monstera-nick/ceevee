@@ -1,0 +1,97 @@
+import streamlit as st
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+
+st.title("Tell us about the job! 💼")
+
+jd = st.text_area("Paste job description here",
+"""
+About the Team
+
+We bring OpenAI's technology to the world through products like ChatGPT and the OpenAI API.
+
+We seek to learn from deployment and distribute the benefits of AI, while ensuring that this powerful tool is used responsibly and safely. Safety is more important to us than unfettered growth.
+
+About the Role
+
+As OpenAI scales, we’re looking for experienced, problem-solving engineers to build new products and scale our systems. Our success depends on our ability to quickly iterate on products while also ensuring that they are performant and reliable.
+
+You’ll work in a deeply iterative, collaborative, fast-paced environment to bring our technology to millions of users around the world, and ensure it’s delivered with safety and reliability in mind. 
+
+ In this role, you will:
+
+    Design and build the development and production platforms that power ChatGPT, enabling reliability and security at scale
+
+    Partner with researchers, engineers, product managers, and designers to bring new features and research capabilities to the world
+
+    Accelerate engineering productivity by empowering your fellow engineers with excellent tooling and systems
+
+    Help create a diverse, equitable, and inclusive culture that makes all feel welcome while enabling radical candor and the challenging of group think
+
+    Like all other teams, we are responsible for the reliability of the systems we build. This includes an on-call rotation to respond to critical incidents as needed
+
+You might thrive in this role if you:
+
+    Have meaningful experience with building (and rebuilding) production systems to deliver new product capabilities and to handle increasing scale
+
+    Care deeply about the end user experience and take pride in building products to solve customer needs
+
+    Have a humble attitude, an eagerness to help your colleagues, and a desire to do whatever it takes to make the team succeed
+
+    Own problems end-to-end, and are willing to pick up whatever knowledge you're missing to get the job done
+
+    Build tools to accelerate your own (and your teammates’) workflows, but only when off-the-shelf solutions won’t do
+
+    Have been a startup founder or an early-stage engineer
+
+About OpenAI
+
+OpenAI is an AI research and deployment company dedicated to ensuring that general-purpose artificial intelligence benefits all of humanity. We push the boundaries of the capabilities of AI systems and seek to safely deploy them to the world through our products. AI is an extremely powerful tool that must be created with safety and human needs at its core, and to achieve our mission, we must encompass and value the many different perspectives, voices, and experiences that form the full spectrum of humanity. 
+
+We are an equal opportunity employer and do not discriminate on the basis of race, religion, national origin, gender, sexual orientation, age, veteran status, disability or any other legally protected status. 
+
+OpenAI Affirmative Action and Equal Employment Opportunity Policy Statement
+
+For US Based Candidates: Pursuant to the San Francisco Fair Chance Ordinance, we will consider qualified applicants with arrest and conviction records.
+"""                  
+)
+
+
+with open("cv.pdf", "rb") as file:
+    pdf_data = file.read()
+
+# Create a download button
+st.download_button(
+    label="Download CV and Cover Letter",
+    data=pdf_data,
+    file_name="cv.pdf",  # Name of the downloaded file
+    mime="application/pdf"
+)
+
+if False:
+#if st.button("Generate links"):
+    topic="python programming"
+
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "Generate links to educational resources based on the topic given."
+                "Include links to least one beginner youtube video, one advanced youtube video, a wikipedia article and an official source."
+            ),
+        },
+        {
+            "role": "user",
+            "content": topic,
+        },
+    ]
+
+    client = OpenAI()
+
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=messages,
+    )
+    st.write(response.choices[0].message.content)
